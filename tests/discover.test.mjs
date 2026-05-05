@@ -7,9 +7,11 @@ test('discovers markdown pages and assets deterministically', async () => {
   assert.deepEqual(sources.map((source) => source.relativePath), [
     'Home 0123456789abcdef0123456789abcdef.md',
     'Project Alpha/Project Alpha abcdefabcdefabcdefabcdefabcdefab.md',
+    'Research Notes.html',
     'assets/brief.pdf',
     'assets/diagram.png'
   ]);
   assert.equal(sources.filter((source) => source.kind === 'markdown').length, 2);
+  assert.equal(sources.filter((source) => source.kind === 'html').length, 1);
   assert.equal(sources.filter((source) => source.kind === 'asset').length, 2);
 });
