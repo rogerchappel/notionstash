@@ -8,5 +8,5 @@ node dist/cli.js inspect fixtures/notion-export --output out/smoke > out/smoke-r
 test -f out/smoke/index.json
 test -f out/smoke/crawl-summary.md
 test -d out/smoke/markdown
-node -e "const fs=require('node:fs'); const r=JSON.parse(fs.readFileSync('out/smoke-result.json','utf8')); if(!r.ok||r.pages!==2) process.exit(1);"
+node -e "const fs=require('node:fs'); const r=JSON.parse(fs.readFileSync('out/smoke-result.json','utf8')); if(!r.ok||r.pages!==3) process.exit(1);"
 printf 'notionstash smoke ok\n'
