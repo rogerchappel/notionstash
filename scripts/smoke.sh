@@ -2,7 +2,8 @@
 set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
-rm -rf out/smoke
+rm -rf out/smoke out/smoke-result.json
+mkdir -p out
 npm run build >/dev/null
 node dist/cli.js inspect fixtures/notion-export --output out/smoke > out/smoke-result.json
 test -f out/smoke/index.json
