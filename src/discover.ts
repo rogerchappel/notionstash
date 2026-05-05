@@ -7,7 +7,10 @@ export async function discoverSources(root: string): Promise<CrawlSource[]> {
   const absoluteRoot = path.resolve(root);
   const out: CrawlSource[] = [];
   await walk(absoluteRoot, absoluteRoot, out);
-  return out.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
+  return out.sort((a, b) => {
+    if (a.kind !== b.kind) return kindRank(a.kind) - kindRank(b.kind);
+    return a.relativePath.localeCompare(b.relativePath);
+  });
 }
 
 async function walk(root: string, current: string, out: CrawlSource[]): Promise<void> {
@@ -23,6 +26,10 @@ async function walk(root: string, current: string, out: CrawlSource[]): Promise<
     const source = classify(root, full);
     if (source) out.push(source);
   }
+}
+
+function kindRank(kind: CrawlSource['kind']): number {
+  return kind === 'markdown' ? 0 : kind === 'html' ? 1 : 2;
 }
 
 function classify(root: string, absolutePath: string): CrawlSource | undefined {
